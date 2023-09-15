@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup</title>
+    <!-- Подключаем стили -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+  </head>
+  <body>
+    <h1>Signup</h1>
+    <!--  В атрибуте action указываем скрипт, который будет обрабатывать фортму-->
+    <!-- Если указан метод post, то данные формы будут отправлены в суперглобальный массив $_POST -->
+    <!-- Атрибут novalidate отключает валидацию формы со стороны клиента. -->
+    <!-- Отключаем для того, что бы иметь возможность проверить валидацию со стороны сервера -->
+    <form action="./process-signup.php" method="post" novalidate>
+      <div>
+        <!--В атрибуте for указываем id инпута, к которому относится лэйбл  -->
+        <label for="name">Name</label>
+        <!-- атрибут name используется для идентификации инпута на стороне сервера -->
+        <input type="text" name="name" id="name" />
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+      </div>
+      <div>
+        <label for="password_confirmation">Repeat password</label>
+        <input
+          type="password"
+          name="password_confirmation"
+          id="password_confirmation"
+        />
+      </div>
+      <button type="submit">Sign up</button>
+    </form>
+  </body>
+</html>
