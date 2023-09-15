@@ -30,13 +30,18 @@ $email = $_POST['email'];
 //Так как подключаемый скрипт возвращает значение, то мы присваиваем это значение переменной $mysqli
 //для того, чтобы в последствии была возможность его использовать.
 $conn = require __DIR__ . "/database.php";
-
 $stmt = $conn->prepare("INSERT INTO user (name, email, password_hash)
   VALUES (:name, :email, :password_hash)");
 $stmt->bindParam(':name', $name);
 $stmt->bindParam(':email', $email);
 $stmt->bindParam(':password_hash', $password_hash);
-$stmt->execute();
+try {
+    if ($stmt->execute()) {
+        // В случае успушногй регистрации перенаправляем клиента на соответствующую страничку.
+        header("Location: ./signup-success.html");
+        exit; //Выходим из скрипта
+    }
+} catch (PDOException $e) {
 
-print_r($_POST);
-var_dump($password_hash);
+    echo "Connection failed: " . $e->getMessage();
+}
