@@ -3,20 +3,25 @@
 //с соответствующими записями в базе данных
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
+    $password = $_POST['password'];
     $conn = require __DIR__ . "/database.php";
     $stmt = $conn->prepare("SELECT * FROM user WHERE email = :email");
     try {
-        if ($stmt->execute([':email'=>$email])) {
+        if ($stmt->execute([':email' => $email])) {
+            //переменная $result представляет собой ассоциативный массив, где ключи
+            //элементов массива - это названия столбцов таблицы, а значения - их значения
+            //в данной конкретной выбранной строке.
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo $result['password_hash'];
-            exit;
+            if ($result) {
+                if (password_verify($password, $result['password_hash'])) {
+                    die("login successful");
+                }
+            }
         }
     } catch (PDOException $e) {
-    
+
         echo "Connection failed: " . $e->getMessage();
     }
-
-
 }
 ?>
 <!DOCTYPE html>
